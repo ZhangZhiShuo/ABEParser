@@ -17,18 +17,18 @@ public class AttributeLimits {
         this.attributeType = attributeType;
     }
 
-    public String getLimitsExpression() {
+    public String[] getLimitsExpression() {
         return limitsExpression;
     }
 
-    public void setLimitsExpression(String limitsExpression) {
+    public void setLimitsExpression(String[] limitsExpression) {
         this.limitsExpression = limitsExpression;
     }
 
     private String attributeName;
     private String attributeType;
-    private String limitsExpression;
-    public AttributeLimits(String attributeName,String attributeType,String limitsExpression){
+    private String[] limitsExpression;
+    public AttributeLimits(String attributeName,String attributeType,String[] limitsExpression){
         this.attributeName=attributeName;
         this.attributeType=attributeType;
         this.limitsExpression=limitsExpression;
