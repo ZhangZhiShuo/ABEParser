@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +14,8 @@ public class LoadCode {
     }
 
     private ArrayList<String> codesByLines=new ArrayList<>();
-    private HashMap<String,String> kv=new HashMap<>();
-    private Pattern pattern=Pattern.compile("^\\s*([A-Z_a-z][A-Z_a-z0-9]*)\\s*:\\s*(.*)\\s*$");
+    private HashMap<String,AttributeLimits> kv=new HashMap<>();
+    private Pattern pattern=Pattern.compile("^\\s*([A-Z_a-z][A-Z_a-z0-9]*)\\s*\\(\\s*(string|double|int)\\s*\\)\\s*:\\s*(.*)\\s*$");
     public void loadCodesByLines(String fileName){
         try(BufferedReader br=new BufferedReader(new FileReader(fileName))){
             String buf=null;
@@ -42,9 +41,11 @@ public class LoadCode {
             }
             String attributeName=matcher.group(1);
 //            System.out.println(attributeName);
-            String attributeLimits=matcher.group(2);
+            String attributeType=matcher.group(2);
+            String limitsExpression=matcher.group(3);
+            AttributeLimits al=new AttributeLimits(attributeName,attributeType,limitsExpression);
 //            System.out.println(attributeLimits);
-            kv.put(attributeName,attributeLimits);
+            kv.put(attributeName,al);
         }
     }
     public void printResult(){
