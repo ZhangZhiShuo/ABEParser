@@ -10,10 +10,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lexer {
-    private static String stringType = "\"((\\\"|[^\"])*)\"";
+    private static String stringType = "\"((\\\\\"|[^\"])*)\"";
     private static String intType = "-?(0|[1-9][0-9]*)";
     private static String doubleType = "-?(0|[1-9][0-9]*\\.[0-9]*)";
-    private static String stringIdentifier = "in|not in|\\[|\\]|\\(|\\)|==|!=|or|and|OR|AND|contains";
+    private static String stringIdentifier = "in|not in|\\[|\\]|\\(|\\)|==|!=|or|and|OR|AND|contains|,|!";
     private static String numIdentifier="\\(|\\)|==|!=|or|and|OR|AND|>=|<=|<|>";
 
     private Pattern strPattern = Pattern.compile(String.format("(%s)|(%s)", stringType, stringIdentifier));
@@ -31,27 +31,32 @@ public class Lexer {
             ArrayList<Token> tokenList = new ArrayList<>();
             if (al.getAttributeType().equals("string")) {
                     Matcher matcher=strPattern.matcher(al.getLimitExpression());
-                    if(matcher.group(2)!=null){
-                        tokenList.add(new StringToken(matcher.group(2)));
+                    while(matcher.find()){
+                        if(matcher.group(2)!=null){
+                            tokenList.add(new StringToken(matcher.group(2)));
+                        }
+                        else if(matcher.group(4)!=null){
+                            tokenList.add(new identifierToken(matcher.group(4)));
+                        }
                     }
-                    else if(matcher.group(4)!=null){
-                        tokenList.add(new identifierToken(matcher.group(4)));
-                    }
+
             } else if (al.getAttributeType().equals("int")) {
                 Matcher matcher=intPattern.matcher(al.getLimitExpression());
-                if(matcher.group(1)!=null){
-                    tokenList.add(new IntToken(Integer.valueOf(matcher.group(1))));
-                }
-                else if(matcher.group(3)!=null){
-                    tokenList.add(new identifierToken(matcher.group(3)));
+                while(matcher.find()) {
+                    if (matcher.group(1) != null) {
+                        tokenList.add(new IntToken(Integer.valueOf(matcher.group(1))));
+                    } else if (matcher.group(3) != null) {
+                        tokenList.add(new identifierToken(matcher.group(3)));
+                    }
                 }
             } else {
                 Matcher matcher=doublePattern.matcher(al.getLimitExpression());
-                if(matcher.group(1)!=null){
-                    tokenList.add(new DoubleToken(Double.valueOf(matcher.group(1))));
-                }
-                else if(matcher.group(3)!=null){
-                    tokenList.add(new identifierToken(matcher.group(3)));
+                while(matcher.find()) {
+                    if (matcher.group(1) != null) {
+                        tokenList.add(new DoubleToken(Double.valueOf(matcher.group(1))));
+                    } else if (matcher.group(3) != null) {
+                        tokenList.add(new identifierToken(matcher.group(3)));
+                    }
                 }
             }
             tokenMap.put(key,tokenList);
