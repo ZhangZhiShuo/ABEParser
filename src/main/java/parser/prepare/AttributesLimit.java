@@ -1,6 +1,6 @@
 package parser.prepare;
 
-public class AttributeLimits {
+public class AttributesLimit {
     public String getAttributeName() {
         return attributeName;
     }
@@ -17,21 +17,21 @@ public class AttributeLimits {
         this.attributeType = attributeType;
     }
 
-    public String[] getLimitsExpression() {
-        return limitsExpression;
+    public String getLimitExpression() {
+        return limitExpression;
     }
 
-    public void setLimitsExpression(String[] limitsExpression) {
-        this.limitsExpression = limitsExpression;
+    public void setLimitExpression(String limitsExpression) {
+        this.limitExpression = limitsExpression;
     }
 
     private String attributeName;
     private String attributeType;
-    private String[] limitsExpression;
-    public AttributeLimits(String attributeName,String attributeType,String[] limitsExpression){
+    private String limitExpression;
+    public AttributesLimit(String attributeName, String attributeType, String limitExpression){
         this.attributeName=attributeName;
         this.attributeType=attributeType;
-        this.limitsExpression=limitsExpression;
+        this.limitExpression=limitExpression;
     }
 
 }

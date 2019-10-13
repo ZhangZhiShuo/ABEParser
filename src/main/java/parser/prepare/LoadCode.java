@@ -15,11 +15,11 @@ public class LoadCode {
 
     private ArrayList<String> codesByLines=new ArrayList<>();
 
-    public HashMap<String, AttributeLimits> getAttributeLimitsMap() {
-        return attributeLimitsMap;
+    public HashMap<String, AttributesLimit> getAttributesLimitMap() {
+        return attributesLimitMap;
     }
 
-    private HashMap<String,AttributeLimits> attributeLimitsMap=new HashMap<>();
+    private HashMap<String, AttributesLimit> attributesLimitMap=new HashMap<>();
     private Pattern pattern=Pattern.compile("^\\s*([A-Z_a-z][A-Z_a-z0-9]*)\\s*\\(\\s*(string|double|int)\\s*\\)\\s*:\\s*(.*)\\s*$");
     public void loadCodesByLines(String fileName){
         try(BufferedReader br=new BufferedReader(new FileReader(fileName))){
@@ -47,14 +47,14 @@ public class LoadCode {
             String attributeName=matcher.group(1);
 //            System.out.println(attributeName);
             String attributeType=matcher.group(2);
-            String[] limitsExpression=matcher.group(3).split(";");
-            AttributeLimits al=new AttributeLimits(attributeName,attributeType,limitsExpression);
+            String limitsExpression=matcher.group(3);
+            AttributesLimit al=new AttributesLimit(attributeName,attributeType,limitsExpression);
 //            System.out.println(attributeLimits);
-            attributeLimitsMap.put(attributeName,al);
+            attributesLimitMap.put(attributeName,al);
         }
     }
     public void printResult(){
-        System.out.println(attributeLimitsMap);
+        System.out.println(attributesLimitMap);
     }
 
 }
