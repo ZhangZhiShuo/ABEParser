@@ -6,9 +6,20 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ASTLeaf implements ASTNode {
-   private Token token;
-   public ASTLeaf(Token token){
+    public Token getToken() {
+        return token;
+    }
+
+    private Token token;
+
+    public String getType() {
+        return type;
+    }
+
+    private String type;
+   public ASTLeaf(Token token,String type){
        this.token=token;
+       this.type=type;
    }
     @Override
     public ASTNode child(int i) {

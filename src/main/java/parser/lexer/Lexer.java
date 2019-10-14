@@ -16,9 +16,9 @@ public class Lexer {
     private static String stringIdentifier = "in|not in|\\[|\\]|\\(|\\)|==|!=|or|and|OR|AND|contains|,|!";
     private static String numIdentifier="\\(|\\)|==|!=|or|and|OR|AND|>=|<=|<|>";
 
-    private Pattern strPattern = Pattern.compile(String.format("(%s)|(%s)", stringType, stringIdentifier));
-    private Pattern intPattern = Pattern.compile(String.format("(%s)|(%s)", intType, numIdentifier));
-    private Pattern doublePattern = Pattern.compile(String.format("(%s)|(%s)", doubleType, numIdentifier));
+    private Pattern strPattern = Pattern.compile(String.format("(%s)|(%s)|\\s+", stringType, stringIdentifier));
+    private Pattern intPattern = Pattern.compile(String.format("(%s)|(%s)|\\s+", intType, numIdentifier));
+    private Pattern doublePattern = Pattern.compile(String.format("(%s)|(%s)|\\s+", doubleType, numIdentifier));
     private HashMap<String, List> tokenMap = new HashMap<>(16);
 
     public void genToken(String fileName) {
@@ -31,33 +31,64 @@ public class Lexer {
             ArrayList<Token> tokenList = new ArrayList<>();
             if (al.getAttributeType().equals("string")) {
                     Matcher matcher=strPattern.matcher(al.getLimitExpression());
-                    while(matcher.find()){
-                        if(matcher.group(2)!=null){
-                            tokenList.add(new StringToken(matcher.group(2)));
+                    int start=0;
+                    int end=al.getLimitExpression().length();
+                    while(start<end){
+                        matcher.region(start,end);
+                        if(matcher.lookingAt()){
+                            if(matcher.group(2)!=null){
+                                tokenList.add(new StringToken(matcher.group(2)));
+                            }
+                            else if(matcher.group(4)!=null){
+                                tokenList.add(new identifierToken(matcher.group(4)));
+                            }
+                            start=matcher.end();
                         }
-                        else if(matcher.group(4)!=null){
-                            tokenList.add(new identifierToken(matcher.group(4)));
+                        else{
+                            System.getLogger("myLogger").log(System.Logger.Level.ERROR,"Bad Lexer at "+start+" to "+end+" about limit "+al.getAttributeName());
+                            return ;
                         }
                     }
 
             } else if (al.getAttributeType().equals("int")) {
                 Matcher matcher=intPattern.matcher(al.getLimitExpression());
-                while(matcher.find()) {
-                    if (matcher.group(1) != null) {
-                        tokenList.add(new IntToken(Integer.valueOf(matcher.group(1))));
-                    } else if (matcher.group(3) != null) {
-                        tokenList.add(new identifierToken(matcher.group(3)));
+                int start=0;
+                int end=al.getLimitExpression().length();
+                while(start<end){
+                    matcher.region(start,end);
+                    if(matcher.lookingAt()){
+                        if (matcher.group(1) != null) {
+                            tokenList.add(new IntToken(Integer.valueOf(matcher.group(1))));
+                        } else if (matcher.group(3) != null) {
+                            tokenList.add(new identifierToken(matcher.group(3)));
+                        }
+                        start=matcher.end();
+                    }
+                    else{
+                        System.getLogger("myLogger").log(System.Logger.Level.ERROR,"Bad Lexer at "+start+" to "+end+" about limit "+al.getAttributeName());
+                        return ;
                     }
                 }
             } else {
                 Matcher matcher=doublePattern.matcher(al.getLimitExpression());
-                while(matcher.find()) {
-                    if (matcher.group(1) != null) {
-                        tokenList.add(new DoubleToken(Double.valueOf(matcher.group(1))));
-                    } else if (matcher.group(3) != null) {
-                        tokenList.add(new identifierToken(matcher.group(3)));
+                int start=0;
+                int end=al.getLimitExpression().length();
+                while(start<end){
+                    matcher.region(start,end);
+                    if(matcher.lookingAt()){
+                        if (matcher.group(1) != null) {
+                            tokenList.add(new DoubleToken(Double.valueOf(matcher.group(1))));
+                        } else if (matcher.group(3) != null) {
+                            tokenList.add(new identifierToken(matcher.group(3)));
+                        }
+                        start=matcher.end();
+                    }
+                    else{
+                        System.getLogger("myLogger").log(System.Logger.Level.ERROR,"Bad Lexer at "+start+" to "+end+" about limit "+al.getAttributeName());
+                        return ;
                     }
                 }
+
             }
             tokenMap.put(key,tokenList);
         }
