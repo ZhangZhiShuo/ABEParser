@@ -33,22 +33,36 @@ public class Rule {
         this.elements.add(identifierElement);
         return this;
     }
-    public Rule addOpExp(Rule factor, Operators opsMap){
-        OpExpElement opExpElement=new OpExpElement(opsMap,factor);
+
+    public Rule addOpExp(Rule factor, Operators opsMap) {
+        OpExpElement opExpElement = new OpExpElement(opsMap, factor);
         this.elements.add(opExpElement);
         return this;
     }
-    public Rule addSkipElement(String rule){
-        SkipElement skipElement=new SkipElement(rule);
+
+    public Rule addSkipElement(String rule) {
+        SkipElement skipElement = new SkipElement(rule);
         this.elements.add(skipElement);
         return this;
     }
-    public Rule addRepeatElement(Rule rule,boolean onlyOnce){
-        RepeatElement repeatElement=new RepeatElement(rule,onlyOnce);
+
+    public Rule addRepeatElement(Rule rule, boolean onlyOnce) {
+        RepeatElement repeatElement = new RepeatElement(rule, onlyOnce);
         this.elements.add(repeatElement);
         return this;
     }
 
+    public Rule addOrElement(Rule... rules) {
+        OrElement orElement = new OrElement(rules);
+        this.elements.add(orElement);
+        return this;
+    }
+
+    public Rule addASTree(Rule rule){
+        TreeElement treeElement=new TreeElement(rule);
+        this.elements.add(treeElement);
+        return this;
+    }
     public ASTNode createAST(ArrayList<Token> tokenList) {
         ArrayList<ASTNode> astNodes = new ArrayList<>();
         for (RuleElement e : this.elements) {
@@ -64,8 +78,9 @@ public class Rule {
             return results;
         }
     }
-    public boolean match(ArrayList<Token> tokenList){
-        RuleElement first=this.elements.get(0);
+
+    public boolean match(ArrayList<Token> tokenList) {
+        RuleElement first = this.elements.get(0);
         return first.match(tokenList);
     }
 

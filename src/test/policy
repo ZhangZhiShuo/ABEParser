@@ -1,2 +1,2 @@
-name(string) :(in ["小说","小鸡"]) and (!="张志说") and (=="\"")
+name(string) :(in ["小说","小鸡"]) and (!="Mr.Zhang") or (in ["小吴","小王"])
 age(int) :(>=12) and (<=18)

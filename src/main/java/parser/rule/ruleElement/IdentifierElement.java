@@ -18,23 +18,27 @@ public class IdentifierElement implements RuleElement {
     @Override
     public void createAST(ArrayList<Token> tokenList, List<ASTNode> results) {
         Token t = TokenListOp.getNextToken(tokenList);
-        if (t.getType().equals("identifier") && t.getValue().toString().matches(this.rule)) {
+        if (t != null && t.getType().equals("identifier") && t.getValue().toString().matches(this.rule)) {
             ASTLeaf leaf = new ASTLeaf(t, "identifier");
+            leaf.setName((String)t.getValue());
             results.add(leaf);
-        }
-        else{
-            System.getLogger("myLogger").log(System.Logger.Level.ERROR,"Bad createAST at IdentifierElement about token "+t.toString());
+        } else {
+            System.getLogger("myLogger").log(System.Logger.Level.ERROR, "Bad createAST at IdentifierElement about token " + t.toString());
         }
     }
 
     @Override
     public boolean match(ArrayList<Token> tokenList) {
-        Token t=TokenListOp.peekNextToken(tokenList);
-        if (t.getType().equals("identifier") && t.getValue().toString().matches(this.rule)) {
-           return true;
-        }
-        else{
+        Token t = TokenListOp.peekNextToken(tokenList);
+        if (t == null) {
             return false;
         }
+        if (t.getType().equals("identifier") && t.getValue().toString().matches(this.rule)) {
+            return true;
+        } else {
+            return false;
+        }
+        //System.out.println(t.getValue().toString());
+
     }
 }

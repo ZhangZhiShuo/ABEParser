@@ -19,6 +19,11 @@ public class Lexer {
     private Pattern strPattern = Pattern.compile(String.format("(%s)|(%s)|\\s+", stringType, stringIdentifier));
     private Pattern intPattern = Pattern.compile(String.format("(%s)|(%s)|\\s+", intType, numIdentifier));
     private Pattern doublePattern = Pattern.compile(String.format("(%s)|(%s)|\\s+", doubleType, numIdentifier));
+
+    public HashMap<String, List> getTokenMap() {
+        return tokenMap;
+    }
+
     private HashMap<String, List> tokenMap = new HashMap<>(16);
 
     public void genToken(String fileName) {

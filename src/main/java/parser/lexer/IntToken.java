@@ -1,10 +1,9 @@
 package parser.lexer;
 
 public class IntToken extends Token{
-    private Integer value;
 
     public Integer getValue() {
-        return value;
+        return (Integer)value;
     }
 
     public void setValue(Integer value) {

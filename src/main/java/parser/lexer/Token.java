@@ -20,9 +20,8 @@ public abstract class Token {
     }
 
     protected Object value;
-
     @Override
     public String toString() {
-        return String.format("Token type:%s;Token value:%s;",type,value.toString());
+        return String.format("Token type:%s  Token value:%s",type,String.valueOf(value));
     }
 }

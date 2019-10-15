@@ -1,5 +1,12 @@
+import parser.ABEParser;
+import parser.ast.ASTNode;
 import parser.lexer.Lexer;
+import parser.lexer.Token;
 import parser.prepare.LoadCode;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Test {
     public static void main(String[] args){
@@ -7,6 +14,11 @@ public class Test {
 //        lc.loadCodesByLines("./src/test/policy");
 //        lc.turnCodesToHashMap();
 //        lc.printResult();
-        new Lexer().genToken("./src/test/policy");
+        Lexer lexer=new Lexer();
+        lexer.genToken("./src/test/policy");
+        HashMap<String, List> tokenMap=lexer.getTokenMap();
+        ABEParser abeParser=new ABEParser();
+        ASTNode root=abeParser.parser((ArrayList<Token>) tokenMap.get("name"));
+        System.out.println("ending");
     }
 }

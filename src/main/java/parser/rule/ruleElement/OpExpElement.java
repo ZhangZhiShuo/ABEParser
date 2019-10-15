@@ -33,17 +33,24 @@ public class OpExpElement implements RuleElement {
 
         Token op=TokenListOp.getNextToken(tokenList);
         ASTLeaf opLeaf=new ASTLeaf(op,"op");
+        opLeaf.setName((String)op.getValue());
         ASTNode right=factor.createAST(tokenList);
         Precedence post;
         while((post=peekNextOperator(tokenList))!=null&&isPrecedence(pre,post)){
             right=doShift(post,right,tokenList);
         }
         ASTList list=new ASTList(Arrays.asList(left,opLeaf,right));
+        list.setName(opLeaf.getLeafName()+" ASTList");
         return list;
     }
     private Precedence peekNextOperator(ArrayList<Token> tokenList){
         Token t= TokenListOp.peekNextToken(tokenList);
-        return opsMap.get(t.getValue());
+        if(t!=null) {
+            return opsMap.get(t.getValue());
+        }
+        else{
+            return null;
+        }
     }
     private boolean isPrecedence(Precedence pre,Precedence post){
         if(post.isLeftAsso()){
