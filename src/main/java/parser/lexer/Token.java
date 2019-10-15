@@ -10,6 +10,15 @@ public abstract class Token {
     }
 
     protected String type;
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
     protected Object value;
 
     @Override

@@ -6,5 +6,6 @@ public interface ASTNode extends Iterable<ASTNode> {
      ASTNode child(int i);
      int numChildren();
      List<ASTNode> children();
+     void setName(String name);
 }
 

@@ -12,5 +12,6 @@ public class identifierToken extends Token{
     private String value;
 public identifierToken(String value){
     this.value=value;
+    this.type="identifier";
 }
 }

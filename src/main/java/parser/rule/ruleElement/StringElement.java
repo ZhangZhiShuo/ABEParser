@@ -2,7 +2,6 @@ package parser.rule.ruleElement;
 
 import parser.ast.ASTLeaf;
 import parser.ast.ASTNode;
-import parser.lexer.Lexer;
 import parser.lexer.Token;
 import parser.lexer.TokenListOp;
 

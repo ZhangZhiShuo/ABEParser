@@ -17,6 +17,16 @@ public class ASTLeaf implements ASTNode {
     }
 
     private String type;
+
+    public String getLeafName() {
+        return leafName;
+    }
+
+    public void setLeafName(String leafName) {
+        this.leafName = leafName;
+    }
+
+    private String leafName;
    public ASTLeaf(Token token,String type){
        this.token=token;
        this.type=type;
@@ -34,6 +44,11 @@ public class ASTLeaf implements ASTNode {
     @Override
     public List<ASTNode> children() {
         return null;
+    }
+
+    @Override
+    public void setName(String name) {
+        setLeafName(name);
     }
 
     @Override

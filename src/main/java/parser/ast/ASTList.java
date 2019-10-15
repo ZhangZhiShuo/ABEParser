@@ -6,9 +6,21 @@ import java.util.List;
 
 public class ASTList implements ASTNode{
     private ArrayList<ASTNode> children;
-    public ASTList(ArrayList<ASTNode> children){
-        this.children=children;
+    public ASTList(List<ASTNode> children){
+        ArrayList<ASTNode> astNodes=new ArrayList<>(children);
+        this.children=astNodes;
     }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+    private String listName;
+
     @Override
     public ASTNode child(int i) {
         return children.get(i);
@@ -22,6 +34,11 @@ public class ASTList implements ASTNode{
     @Override
     public List<ASTNode> children() {
         return children;
+    }
+
+    @Override
+    public void setName(String name) {
+         setListName(name);
     }
 
     @Override
