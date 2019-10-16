@@ -7,12 +7,12 @@ import parser.rule.ruleElement.OpExpElement.Operators;
 
 import java.util.ArrayList;
 
-public class ABEParser {
+public class StringTypeParser {
     private Operators operators=new Operators();
     private Rule compareString,stringSetOp;
     private Rule factor;
     private Rule OpExp;
-    public ABEParser(){
+    public StringTypeParser(){
         operators.add("or",1,true);
         operators.add("OR",1,true);
         operators.add("and",1,true);
@@ -28,6 +28,5 @@ public class ABEParser {
     }
     public ASTNode parser(ArrayList<Token> tokenList){
         return OpExp.createAST(tokenList);
-
     }
 }

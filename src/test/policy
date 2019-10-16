@@ -1,2 +1,2 @@
-name(string) :(in ["小说","小鸡"]) and (!="Mr.Zhang") or (in ["小吴","小王"])
-age(int) :(>=12) and (<=18)
+name(string) :(in ["小说","小鸡","小垃圾"]) and ((!="Mr.Zhang") or ( not in ["小吴","小王"]))
+age(int) :((>=12) and (<=18))

@@ -27,7 +27,16 @@ public class Rule {
         this.elements.add(stringElement);
         return this;
     }
-
+public Rule addIntElement(){
+        IntElement intElement=new IntElement();
+        this.elements.add(intElement);
+        return this;
+}
+public Rule addDoubleElement(){
+        DoubleElement doubleElement=new DoubleElement();
+        this.elements.add(doubleElement);
+        return this;
+}
     public Rule addIdentifierElement(String ruleName) {
         IdentifierElement identifierElement = new IdentifierElement(ruleName);
         this.elements.add(identifierElement);
@@ -70,7 +79,9 @@ public class Rule {
         }
         if (astNodes.size() == 1) {
             ASTNode result = astNodes.get(0);
-            result.setName(this.ruleName);
+            if(result.getName()==null) {
+                result.setName(this.ruleName);
+            }
             return result;
         } else {
             ASTList results = new ASTList(astNodes);

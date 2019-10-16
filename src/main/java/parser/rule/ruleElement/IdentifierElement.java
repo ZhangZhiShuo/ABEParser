@@ -2,6 +2,7 @@ package parser.rule.ruleElement;
 
 import parser.ast.ASTLeaf;
 import parser.ast.ASTNode;
+import parser.lexer.IdentifierToken;
 import parser.lexer.Token;
 import parser.lexer.TokenListOp;
 
@@ -18,9 +19,9 @@ public class IdentifierElement implements RuleElement {
     @Override
     public void createAST(ArrayList<Token> tokenList, List<ASTNode> results) {
         Token t = TokenListOp.getNextToken(tokenList);
-        if (t != null && t.getType().equals("identifier") && t.getValue().toString().matches(this.rule)) {
+        if (t instanceof IdentifierToken && t.getValue().toString().matches(this.rule)) {
             ASTLeaf leaf = new ASTLeaf(t, "identifier");
-            leaf.setName((String)t.getValue());
+            leaf.setName(leaf.getType());
             results.add(leaf);
         } else {
             System.getLogger("myLogger").log(System.Logger.Level.ERROR, "Bad createAST at IdentifierElement about token " + t.toString());

@@ -45,7 +45,7 @@ public class Lexer {
                                 tokenList.add(new StringToken(matcher.group(2)));
                             }
                             else if(matcher.group(4)!=null){
-                                tokenList.add(new identifierToken(matcher.group(4)));
+                                tokenList.add(new IdentifierToken(matcher.group(4)));
                             }
                             start=matcher.end();
                         }
@@ -65,7 +65,7 @@ public class Lexer {
                         if (matcher.group(1) != null) {
                             tokenList.add(new IntToken(Integer.valueOf(matcher.group(1))));
                         } else if (matcher.group(3) != null) {
-                            tokenList.add(new identifierToken(matcher.group(3)));
+                            tokenList.add(new IdentifierToken(matcher.group(3)));
                         }
                         start=matcher.end();
                     }
@@ -84,7 +84,7 @@ public class Lexer {
                         if (matcher.group(1) != null) {
                             tokenList.add(new DoubleToken(Double.valueOf(matcher.group(1))));
                         } else if (matcher.group(3) != null) {
-                            tokenList.add(new identifierToken(matcher.group(3)));
+                            tokenList.add(new IdentifierToken(matcher.group(3)));
                         }
                         start=matcher.end();
                     }

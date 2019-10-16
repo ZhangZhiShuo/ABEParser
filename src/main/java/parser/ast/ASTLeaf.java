@@ -52,6 +52,17 @@ public class ASTLeaf implements ASTNode {
     }
 
     @Override
+    public String getName() {
+        return this.getLeafName();
+    }
+
+    @Override
+    public Object getValue() {
+        return token.getValue();
+    }
+
+
+    @Override
     public Iterator<ASTNode> iterator() {
         return null;
     }

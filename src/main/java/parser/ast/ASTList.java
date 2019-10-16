@@ -42,6 +42,16 @@ public class ASTList implements ASTNode{
     }
 
     @Override
+    public String getName() {
+        return this.getListName();
+    }
+
+    @Override
+    public Object getValue() {
+        return "This is a list";
+    }
+
+    @Override
     public Iterator<ASTNode> iterator() {
         return children.iterator();
     }
